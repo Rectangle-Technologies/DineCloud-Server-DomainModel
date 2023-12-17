@@ -6,6 +6,10 @@ const routers = [
     {
         path: '/api/application',
         router: require('./routes/application')
+    },
+    {
+        path: '/api/domainModel',
+        router: require('./routes/domainModel')
     }
 ];
 
