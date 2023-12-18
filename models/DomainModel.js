@@ -18,7 +18,7 @@ const DomainModelSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    application: {
+    applicationId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ApplicationModel',
         required: true

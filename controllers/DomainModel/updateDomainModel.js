@@ -17,6 +17,13 @@ const updateDomainModel = async (req, res) => {
             return successResponse(res, await domainModel.save(), "Domain Model updated successfully");
         }
 
+        const domainModel = await DomainModel.find({
+            name: req.body.name
+        });
+        if (domainModel.length) {
+            return errorResponse(res, {error: 'Domain Model already exists'}, 400);
+        }
+
         const newDomainModel = new DomainModel(req.body);
 
         return successResponse(res, await newDomainModel.save(), "Domain Model created successfully");
