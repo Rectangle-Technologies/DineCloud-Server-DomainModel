@@ -1,6 +1,4 @@
-const DomainModel = require('../../models/DomainModel');
-const mongoose = require('mongoose');
-
+const { GenerateModel, FetchModels } = require('../../utils/modelGenerator');
 const { successResponse, errorResponse } = require('../../utils/response');
 
 const updateModeldata = async (req, res) => {
@@ -34,35 +32,6 @@ const updateModeldata = async (req, res) => {
     }
 
     return successResponse(res, updatedData, "Data updated successfully", errorOccured);
-};
-
-const GenerateModel = async (model) => {
-    const { name, schema } = model;
-    if (mongoose.models[name]) {
-        mongoose.deleteModel(name);
-    }
-    const Model = mongoose.model(name, new mongoose.Schema(schema, {
-        timestamps: true
-    }));
-    return Model;
-};
-
-const FetchModels = async (req, res) => {
-    const modelData = req.body;
-    const modelNames = Object.keys(modelData);
-    const modelSchemas = await DomainModel.find({
-        name: {
-            $in: modelNames
-        }
-    })
-    const modelNamesFromDB = modelSchemas.map(model => model.name);
-    const modelNamesNotInDB = modelNames.filter(modelName => !modelNamesFromDB.includes(modelName));
-
-    if (!modelNamesNotInDB.length) {
-        return modelSchemas;
-    }
-
-    return [];
 };
 
 module.exports = updateModeldata;
