@@ -4,7 +4,7 @@ const updateModeldata = require("../controllers/Models/updateModeldata");
 const routesConfig = [
     {
         method: 'post',
-        path: '/updateModel',
+        path: '/updateModeldata',
         controller: updateModeldata,
         middleware: [],
         inputSchema: {

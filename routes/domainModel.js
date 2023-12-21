@@ -1,3 +1,5 @@
+const { getDomainModel } = require('../controllers/DomainModel/getDomainModels')
+
 const routesConfig = [
     {
         method: 'post',
@@ -20,6 +22,17 @@ const routesConfig = [
             version: "1"
         },
         description: "Get Domain Model by ID"
+    },
+    {
+        method: 'get',
+        path: '/getDomainModels',
+        controller: getDomainModel,
+        middleware: [],
+        inputSchema: {
+            key: "DomainModelSchema",
+            version: "1"
+        },
+        description: "Get Domain Models"
     }
 ]
 

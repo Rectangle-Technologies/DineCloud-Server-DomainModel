@@ -14,32 +14,8 @@ const userSchema = new mongoose.Schema({
         required : true,
         trim: true,
     },
-    client: {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        code: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        address: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        city: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        state: {
-            type: String,
-            required: true,
-            trim: true
-        }
+    clientId: {
+        type: mongoose.Schema.Types.ObjectId,
     },
     code: {
         type: String,
