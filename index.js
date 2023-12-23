@@ -1,6 +1,7 @@
 const startTimestamp = new Date().getTime();
 
 // importing modules
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -8,12 +9,8 @@ const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const cluster = require('cluster');
 const JSONschemaCore = require('./models/JSONschemaCore');
 const authenticateUserMiddleware = require('./middlewares/authenticate');
-
-// configuring dotenv
-require('dotenv').config();
 
 // creating express object
 const app = express();

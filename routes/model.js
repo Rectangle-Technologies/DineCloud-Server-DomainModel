@@ -1,3 +1,4 @@
+const { getModelDataByFilter } = require("../controllers/Models/getModelDataByFilter");
 const { getModelDataById } = require("../controllers/Models/getModelDataById");
 const updateModeldata = require("../controllers/Models/updateModeldata");
 
@@ -14,7 +15,7 @@ const routesConfig = [
         description: 'Update model data'
     },
     {
-        method: 'get',
+        method: 'post',
         path: '/getDataById',
         controller: getModelDataById,
         middleware: [],
@@ -23,6 +24,17 @@ const routesConfig = [
             version: '1'
         },
         description: 'Get model data by id'
+    },
+    {
+        method: 'post',
+        path: '/getDataByFilter',
+        controller: getModelDataByFilter,
+        middleware: [],
+        inputSchema: {
+            key: 'ModelsAPI',
+            version: '1'
+        },
+        description: 'Get model data by filter'
     }
 ];
 

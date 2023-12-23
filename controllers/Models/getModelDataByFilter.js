@@ -1,7 +1,7 @@
 const { FetchModels, GenerateModel } = require('../../utils/modelGenerator');
 const { successResponse, errorResponse } = require('../../utils/response');
 
-const getModelDataById = async (req, res) => {
+const getModelDataByFilter = async (req, res) => {
     try {
         const modelSchemas = await FetchModels(req, res);
         if (!modelSchemas.length) {
@@ -13,7 +13,7 @@ const getModelDataById = async (req, res) => {
         for (const modelSchema of modelSchemas) {
             const modelName = modelSchema.name;
             const Model = await GenerateModel(modelSchema);
-            const result = await Model.findById(req.body[modelName]._id);
+            const result = await Model.find(req.body[modelName]);
             modelData.push({[modelName]: result});
         }
 
@@ -25,5 +25,5 @@ const getModelDataById = async (req, res) => {
 };
 
 module.exports = {
-    getModelDataById
-}
+    getModelDataByFilter
+};
