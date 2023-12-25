@@ -1,12 +1,12 @@
 const { getModelDataByFilter } = require("../controllers/Models/getModelDataByFilter");
 const { getModelDataById } = require("../controllers/Models/getModelDataById");
-const updateModeldata = require("../controllers/Models/updateModeldata");
+const { updateModeldatas, updateModeldata } = require("../controllers/Models/updateModeldata");
 
 const routesConfig = [
     {
         method: 'post',
-        path: '/updateModeldata',
-        controller: updateModeldata,
+        path: '/updateModeldatas',
+        controller: updateModeldatas,
         middleware: [],
         inputSchema: {
             key: 'ModelsAPI',
@@ -35,7 +35,18 @@ const routesConfig = [
             version: '1'
         },
         description: 'Get model data by filter'
-    }
+    },
+    {
+        method: 'post',
+        path: '/updateModeldata',
+        controller: updateModeldata,
+        middleware: [],
+        inputSchema: {
+            key: 'ModelsAPI',
+            version: '1'
+        },
+        description: 'Update model data'
+    },
 ];
 
 module.exports = routesConfig;
