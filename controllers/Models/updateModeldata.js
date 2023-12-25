@@ -63,7 +63,7 @@ const updateModeldata = async (req, res) => {
         updatedData.push({ [modelSchema.name]: result });
         return successResponse(res, updatedData, "Data updated successfully");
     } catch (error) {
-        const errorObject = error.response.data || error;
+        const errorObject = error?.response?.data || error;
         errorResponse(res, errorObject, error.statusCode || 500);
     }
 };
