@@ -61,7 +61,7 @@ pipeline {
             steps {
                 dir("${folder_path}") {
                     // Build Docker image
-                    bat "docker build -t dinecloud-server-domainmodel:${env.BUILD_NUMBER} ."
+                    bat "docker build -t ${docker_image_name}:${env.BUILD_NUMBER} ."
                 }
             }
         }
