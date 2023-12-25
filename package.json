@@ -8,11 +8,12 @@
     "email": "naman22khater@gmail.com"
   },
   "scripts": {
-    "docker:build": "docker build -t dinecloud-server-domainmodel:latest .",
-    "docker:push": "docker push rectangletechnologies/dinecloud-server-domainmodel:latest",
-    "docker:run": "docker run -d -p 6000:6000 --env-file .env --name dinecloud-server-domainmodel --memory=\"256m\" --cpus=0.5 dinecloud-server-domainmodel:latest",
-    "docker:run:prod": "docker run -d -p 6000:6000 --env-file .env --name dinecloud-server-domainmodel --memory=\"256m\" --cpus=0.5 rectangletechnologies/dinecloud-server-domainmodel:latest",
-    "docker:tag": "docker tag dinecloud-server-domainmodel:latest rectangletechnologies/dinecloud-server-domainmodel:latest",
+    "start": "node index.js",
+    "docker:build": "docker build -t dinecloud_server_domainmodel:latest .",
+    "docker:push": "docker push rectangletechnologies/dinecloud_server_domainmodel:latest",
+    "docker:run": "docker run -d -p 6000:6000 --env-file .env --name dinecloud_server_domainmodel --memory=\"256m\" --cpus=0.5 dinecloud_server_domainmodel:latest",
+    "docker:run:prod": "docker run -d -p 6000:6000 --env-file .env --name dinecloud_server_domainmodel --memory=\"256m\" --cpus=0.5 rectangletechnologies/dinecloud_server_domainmodel:latest",
+    "docker:tag": "docker tag dinecloud_server_domainmodel:latest rectangletechnologies/dinecloud_server_domainmodel:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
