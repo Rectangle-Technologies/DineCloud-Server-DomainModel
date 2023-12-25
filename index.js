@@ -40,7 +40,7 @@ app.use('/api', authenticateUserMiddleware);
 
 const routers = require('./routers');
 
-async function createRoutes (route, Router) {
+async function createRoutes(route, Router) {
     const schemaKey = route.inputSchema.key;
     const version = route.inputSchema.version;
     const schemaIdentifier = `${schemaKey}_${version}`;
@@ -51,7 +51,7 @@ async function createRoutes (route, Router) {
         if (!generatedSchema[schemaIdentifier]) {
             generatedSchema[schemaIdentifier] = schemaResponse.schema;
         }
-        
+
         if (!schemaResponse) {
             throw new Error('Schema not found');
         }
@@ -64,7 +64,7 @@ async function createRoutes (route, Router) {
     Router[route.method](route.path, [...route.middleware], route.controller);
 }
 
-async function createRouters (router) {
+async function createRouters(router) {
     const Router = express.Router();
 
     for (var index in router.router) {
@@ -74,15 +74,15 @@ async function createRouters (router) {
     return Router;
 }
 
-async function useRouters (routers) {
+async function useRouters(routers) {
     for (var index in routers) {
         const Router = await createRouters(routers[index]);
-        generatedRouters.push({path: routers[index].path, router: Router});
+        generatedRouters.push({ path: routers[index].path, router: Router });
         app.use(routers[index].path, Router);
     }
 }
 
-function fetchRoutes (routers) {
+function fetchRoutes(routers) {
     var Table = require('cli-table');
     var table = new Table({ head: ["METHOD", "PATH"] });
 
@@ -92,12 +92,12 @@ function fetchRoutes (routers) {
         for (var key in stack) {
             if (stack.hasOwnProperty(key)) {
                 var val = stack[key];
-                if(val.route) {
+                if (val.route) {
                     val = val.route;
                     var _o = {};
-                    _o[val.stack[0].method]  = [path + val.path];    
+                    _o[val.stack[0].method] = [path + val.path];
                     table.push(_o);
-                }       
+                }
             }
         }
     }
@@ -109,15 +109,12 @@ function fetchRoutes (routers) {
 const startServer = async () => {
     try {
         // connecting to database
-        await mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        await mongoose.connect(process.env.MONGODB_URI);
         console.log('Connected to database');
-        
+
         await useRouters(routers);
         console.log('Routers created');
-        
+
         // listening to port 
         const port = process.env.PORT || 3000;
         app.listen(port, () => {

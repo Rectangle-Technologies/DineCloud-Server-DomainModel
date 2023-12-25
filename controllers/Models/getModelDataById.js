@@ -14,13 +14,13 @@ const getModelDataById = async (req, res) => {
         for (const modelSchema of modelSchemas) {
             const modelName = modelSchema.name;
             const Model = await GenerateModel(modelSchema);
-            const result = await Model.findById(req.body[modelName]._id);
+            const result = await Model.find({ clientId: req.user.clientId, _id: req.body[modelName]._id });
             modelData.push({ [modelName]: result });
         }
 
         return successResponse(res, modelData, "Model data fetched successfully");
     } catch (error) {
-        const errorObject = error.response.data || error;
+        const errorObject = error?.response?.data || error;
         return errorResponse(res, errorObject, 500);
     }
 };

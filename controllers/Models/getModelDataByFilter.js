@@ -11,16 +11,21 @@ const getModelDataByFilter = async (req, res) => {
 
         const modelData = [];
 
+
         for (const modelSchema of modelSchemas) {
             const modelName = modelSchema.name;
             const Model = await GenerateModel(modelSchema);
-            const result = await Model.find(req.body[modelName]);
+            const filters = req.body[modelName];
+            if (req.header('Bypass-Key') !== process.env.BYPASS_KEY) {
+                filters.clientId = req.user.clientId;
+            }
+            const result = await Model.find(filters);
             modelData.push({ [modelName]: result });
         }
 
         return successResponse(res, modelData, "Model data fetched successfully");
     } catch (error) {
-        const errorObject = error.response.data || error;
+        const errorObject = error?.response?.data || error;
         return errorResponse(res, errorObject, 500);
     }
 };
