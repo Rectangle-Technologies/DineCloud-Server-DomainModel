@@ -1,5 +1,5 @@
 {
-  "name": "dinecloud-server-domainmodel",
+  "name": "dinecloud_server_domainmodel",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +8,12 @@
     "email": "naman22khater@gmail.com"
   },
   "scripts": {
+    "start": "node index.js",
+    "docker:build": "docker build -t dinecloud_server_domainmodel:latest .",
+    "docker:push": "docker push rectangletechnologies/dinecloud_server_domainmodel:latest",
+    "docker:run": "docker run -d -p 6000:6000 --env-file .env --name dinecloud_server_domainmodel --memory=256m --cpus=0.5 dinecloud_server_domainmodel:latest",
+    "docker:run:prod": "docker run -d -p 6000:6000 --env-file .env --name dinecloud_server_domainmodel --memory=256m --cpus=0.5 rectangletechnologies/dinecloud_server_domainmodel:latest",
+    "docker:tag": "docker tag dinecloud_server_domainmodel:latest rectangletechnologies/dinecloud_server_domainmodel:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
