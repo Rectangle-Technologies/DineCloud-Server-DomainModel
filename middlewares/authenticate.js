@@ -4,16 +4,11 @@ const jwt = require('@netra-development-solutions/utils.crypto.jsonwebtoken');
 const User = require('../models/User');
 const { TokenNotProvidedException, TokenNotValidException } = require('../exceptions/Base');
 const { UserNotFoundException } = require('../exceptions/UserException');
-const whitelistApis = require('../constants/whitelist/apis');
-const whitelistIpAddress = require('../constants/whitelist/ipAddress');
 
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
-        // check incoming request ip address
-        const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        const isIpAddressWhitelisted = whitelistIpAddress.includes(ipAddress);
-        const isApiWhitelisted = whitelistApis.includes(req.originalUrl);
-        if (isIpAddressWhitelisted && isApiWhitelisted) {
+        if  (req.header('Bypass-Key') === process.env.BYPASS_KEY) {
+            console.log('Bypass-Key is used');
             return next();
         }
 
