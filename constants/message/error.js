@@ -10,6 +10,8 @@ const TokenNotProvidedException = "TokenNotProvidedException";
 const TransactionNotFoundException = "TransactionNotFoundException";
 const UserAlreadyExistsError = "UserAlreadyExistsError";
 const UserNotFoundException = "UserNotFoundException";
+const ModelNotFoundException = "ModelNotFoundException";
+const MultipleModelsException = "MultipleModelsException";
 
 // This section contains all the exceptions messages
 const BANK_ACCOUNT_NOT_FOUND = "Bank account not found";
@@ -23,6 +25,8 @@ const TOKEN_NOT_VALID = "Token not valid";
 const TRANSACTION_NOT_FOUND = "Transaction not found";
 const USER_ALREADY_EXISTS = "User already exists";
 const USER_NOT_FOUND = "User not found";
+const MODEL_NOT_FOUND = "Model not found";
+const MULTIPLE_MODELS_NOT_ALLOWED = "Multiple models not allowed";
 
 module.exports = {
     BANK_ACCOUNT_NOT_FOUND,
@@ -47,4 +51,6 @@ module.exports = {
     UserNotFoundException,
     SomethingWentWrongException,
     TOKEN_NOT_VALID,
+    ModelNotFoundException,
+    MODEL_NOT_FOUND
 };

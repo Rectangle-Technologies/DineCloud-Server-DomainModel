@@ -26,7 +26,7 @@ const routesConfig = [
     {
         method: 'get',
         path: '/getDomainModels',
-        controller: getDomainModel,
+        controller: require('../controllers/DomainModel/getDomainModels').getDomainModel,
         middleware: [],
         inputSchema: {
             key: "DomainModelSchema",
