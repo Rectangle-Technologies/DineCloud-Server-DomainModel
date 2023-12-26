@@ -10,7 +10,6 @@ const getModelDataById = async (req, res) => {
         }
 
         const modelData = [];
-
         for (const modelSchema of modelSchemas) {
             const modelName = modelSchema.name;
             const Model = await GenerateModel(modelSchema);
