@@ -32,6 +32,9 @@ const authenticateUserMiddleware = async (req, res, next) => {
 
             // Check for user
             const user = await User.findOne({ clientCode: decoded.clientCode, _id: decoded._id });
+            if (!user) {
+                throw new UserNotFoundException();
+            }
             req.token = token;
             req.user = user;
 
