@@ -18,7 +18,8 @@ const FetchModels = async (req, res) => {
     const modelSchemas = await DomainModel.find({
         name: {
             $in: modelNames
-        }
+        },
+        clientId: req.user.clientId
     })
     const modelNamesFromDB = modelSchemas.map(model => model.name);
     const modelNamesNotInDB = modelNames.filter(modelName => !modelNamesFromDB.includes(modelName));
