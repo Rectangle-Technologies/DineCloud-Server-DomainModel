@@ -9,6 +9,9 @@ const authenticateUserMiddleware = async (req, res, next) => {
     try {
         // By-pass for login
         if (req.header('Bypass-Key') === process.env.BYPASS_KEY) {
+            req.user = {
+                clientCode: req?.body?.User?.clientCode
+            }
             return next();
         }
 
