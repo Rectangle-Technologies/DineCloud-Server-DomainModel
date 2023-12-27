@@ -24,28 +24,17 @@ const authenticateUserMiddleware = async (req, res, next) => {
 
             const schemas = await FetchModels({
                 body: {
-                    "User": {},
-                    "Developer": {}
+                    "User": {}
                 }
             }, res);
 
-            const User = await GenerateModel(schemas.filter(schema => schema.name === 'User')[0]);
-            const Developer = await GenerateModel(schemas.filter(schema => schema.name === 'Developer')[0]);
+            const User = await GenerateModel(schemas[0]);
 
             // Check for user
-            const user = await User.find({ clientCode: decoded?.clientCode, _id: decoded._id });
-            if (user) {
-                req.user = { ...user[0], role: 1 };
-                req.token = token;
-                return next();
-            }
-            // Check for developer
-            const developer = await Developer.findById(decoded._id);
-            if (!developer) {
-                throw new UserNotFoundException();
-            }
-            req.user = { ...developer, role: 0 };
+            const user = await User.findOne({ clientCode: decoded.clientCode, _id: decoded._id });
             req.token = token;
+            req.user = user;
+
         } else {
             throw new TokenNotValidException();
         }
