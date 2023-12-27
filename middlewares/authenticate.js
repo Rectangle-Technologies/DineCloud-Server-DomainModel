@@ -34,6 +34,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
             const user = await User.findOne({ clientCode: decoded.clientCode, _id: decoded._id });
             req.token = token;
             req.user = user;
+
         } else {
             throw new TokenNotValidException();
         }
