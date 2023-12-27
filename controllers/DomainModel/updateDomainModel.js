@@ -11,17 +11,18 @@ const updateDomainModel = async (req, res) => {
             if (domainModel) {
                 domainModel.schema = req.body.schema;
             } else {
-                return errorResponse(res, {error: 'Domain Model not found'}, 404);
+                return errorResponse(res, { error: 'Domain Model not found' }, 404);
             }
 
             return successResponse(res, await domainModel.save(), "Domain Model updated successfully");
         }
 
         const domainModel = await DomainModel.find({
-            name: req.body.name
+            name: req.body.name,
+            clientId: req.user.clientId
         });
         if (domainModel.length) {
-            return errorResponse(res, {error: 'Domain Model already exists'}, 400);
+            return errorResponse(res, { error: 'Domain Model already exists' }, 400);
         }
 
         const newDomainModel = new DomainModel(req.body);
