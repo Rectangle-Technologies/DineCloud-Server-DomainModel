@@ -52,5 +52,7 @@ module.exports = {
     SomethingWentWrongException,
     TOKEN_NOT_VALID,
     ModelNotFoundException,
-    MODEL_NOT_FOUND
+    MODEL_NOT_FOUND,
+    MultipleModelsException,
+    MULTIPLE_MODELS_NOT_ALLOWED
 };

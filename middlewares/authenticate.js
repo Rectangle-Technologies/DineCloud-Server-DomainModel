@@ -25,6 +25,10 @@ const authenticateUserMiddleware = async (req, res, next) => {
             const schemas = await FetchModels({
                 body: {
                     "User": {}
+                },
+                user: {
+                    clientCode: decoded.clientCode,
+                    clientId: decoded.clientId
                 }
             }, res);
 
@@ -37,7 +41,6 @@ const authenticateUserMiddleware = async (req, res, next) => {
             }
             req.token = token;
             req.user = user;
-
         } else {
             throw new TokenNotValidException();
         }

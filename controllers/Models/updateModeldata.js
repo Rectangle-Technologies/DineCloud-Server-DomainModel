@@ -52,7 +52,6 @@ const updateModeldata = async (req, res) => {
         const Model = await GenerateModel(modelSchema);
         const modelData = req.body[modelSchema.name];
         let result;
-
         if (modelData.length) {
             result = await Model.insertMany(modelData);
         } else {
