@@ -2,7 +2,7 @@ const { ModelNotFoundException } = require('../../exceptions/ModelException');
 const { FetchModels, GenerateModel } = require('../../utils/modelGenerator');
 const { successResponse, errorResponse } = require('../../utils/response');
 
-const getModelDataById = async (req, res) => {
+const deleteModelDataById = async (req, res) => {
     try {
         const modelSchemas = await FetchModels(req, res);
         if (!modelSchemas.length) {
@@ -11,13 +11,12 @@ const getModelDataById = async (req, res) => {
 
         const modelData = [];
         for (const modelSchema of modelSchemas) {
-            const modelName = modelSchema.name;
             const Model = await GenerateModel(modelSchema);
-            const result = await Model.find({ clientId: req?.user?.clientId, clientCode: req?.user?.clientCode, _id: req.body[modelName]._id });
-            modelData.push({ [modelName]: result });
+            const result = await Model.deleteOne({ clientId: req.user.clientId, _id: req.body[modelSchema.name]._id });
+            modelData.push({ [modelSchema.name]: result });
         }
 
-        return successResponse(res, modelData, "Model data fetched successfully");
+        return successResponse(res, modelData, "Model data deleted successfully");
     } catch (error) {
         const errorObject = error?.response?.data || error;
         return errorResponse(res, errorObject, 500);
@@ -25,5 +24,5 @@ const getModelDataById = async (req, res) => {
 };
 
 module.exports = {
-    getModelDataById
-}
+    deleteModelDataById
+};

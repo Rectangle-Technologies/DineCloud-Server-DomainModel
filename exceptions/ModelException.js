@@ -18,7 +18,17 @@ class MultipleModelsException extends Error {
     }
 }
 
+class ModelDataNotFoundException extends Error {
+    constructor(message) {
+        super(message);
+        this.name = error.ModelDataNotFoundException;
+        this.message = message || error.MODEL_DATA_NOT_FOUND;
+        this.statusCode = 404;
+    }
+}
+
 module.exports = {
     ModelNotFoundException,
-    MultipleModelsException
+    MultipleModelsException,
+    ModelDataNotFoundException
 };
