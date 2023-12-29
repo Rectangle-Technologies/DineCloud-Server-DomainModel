@@ -12,6 +12,7 @@ const UserAlreadyExistsError = "UserAlreadyExistsError";
 const UserNotFoundException = "UserNotFoundException";
 const ModelNotFoundException = "ModelNotFoundException";
 const MultipleModelsException = "MultipleModelsException";
+const ModelDataNotFoundException = "ModelDataNotFoundException";
 
 // This section contains all the exceptions messages
 const BANK_ACCOUNT_NOT_FOUND = "Bank account not found";
@@ -27,6 +28,7 @@ const USER_ALREADY_EXISTS = "User already exists";
 const USER_NOT_FOUND = "User not found";
 const MODEL_NOT_FOUND = "Model not found";
 const MULTIPLE_MODELS_NOT_ALLOWED = "Multiple models not allowed";
+const MODEL_DATA_NOT_FOUND = "Model data not found";
 
 module.exports = {
     BANK_ACCOUNT_NOT_FOUND,
@@ -54,5 +56,7 @@ module.exports = {
     ModelNotFoundException,
     MODEL_NOT_FOUND,
     MultipleModelsException,
-    MULTIPLE_MODELS_NOT_ALLOWED
+    MULTIPLE_MODELS_NOT_ALLOWED,
+    ModelDataNotFoundException,
+    MODEL_DATA_NOT_FOUND
 };
