@@ -25,6 +25,7 @@ const FetchModels = async (req, res) => {
         name: {
             $in: modelNames
         },
+        clientCode: req.user.clientCode,
         ...filter
     })
     const modelNamesFromDB = modelSchemas.map(model => model.name);

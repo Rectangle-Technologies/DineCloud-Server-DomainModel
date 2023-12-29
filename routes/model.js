@@ -1,3 +1,5 @@
+const { deleteModelDataByFilter } = require("../controllers/Models/deleteModelDataByFilter");
+const { deleteModelDataById } = require("../controllers/Models/deleteModelDataById");
 const { getModelDataByFilter } = require("../controllers/Models/getModelDataByFilter");
 const { getModelDataById } = require("../controllers/Models/getModelDataById");
 const { updateModeldatas, updateModeldata } = require("../controllers/Models/updateModeldata");
@@ -47,6 +49,28 @@ const routesConfig = [
         },
         description: 'Update model data'
     },
+    {
+        method: 'post',
+        path: '/deleteModeldataByFilter',
+        controller: deleteModelDataByFilter,
+        middleware: [],
+        inputSchema: {
+            key: 'ModelsAPI',
+            version: '1'
+        },
+        description: 'Delete model data by filter'
+    },
+    {
+        method: 'post',
+        path: '/deleteModeldataById',
+        controller: deleteModelDataById,
+        middleware: [],
+        inputSchema: {
+            key: 'ModelsAPI',
+            version: '1'
+        },
+        description: 'Delete model data by id'
+    }
 ];
 
 module.exports = routesConfig;
