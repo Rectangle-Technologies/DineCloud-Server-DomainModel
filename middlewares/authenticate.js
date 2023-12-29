@@ -8,6 +8,9 @@ const { GenerateModel, FetchModels } = require('../utils/modelGenerator');
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
         if (req.header('Bypass-Key') === process.env.BYPASS_KEY) {
+            req.user = {
+                clientCode: req?.body?.User?.clientCode
+            }
             return next();
         }
         const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -31,6 +34,9 @@ const authenticateUserMiddleware = async (req, res, next) => {
             const User = await GenerateModel(schemas[0]);
 
             const user = await User.findOne({ clientCode: decoded.clientCode, _id: decoded._id });
+            if (!user) {
+                throw new UserNotFoundException();
+            }
             req.token = token;
             req.user = user;
         } else {

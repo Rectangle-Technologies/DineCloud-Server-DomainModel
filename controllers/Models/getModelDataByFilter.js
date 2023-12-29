@@ -14,7 +14,7 @@ const getModelDataByFilter = async (req, res) => {
             const Model = await GenerateModel(modelSchema);
             const filters = req.body[modelName];
             if (req.header('Bypass-Key') !== process.env.BYPASS_KEY) {
-                filters.clientId = req.user.clientId;
+                filters.clientId = req?.user?.clientId;
             }
             const result = await Model.find(filters);
             modelData.push({ [modelName]: result });

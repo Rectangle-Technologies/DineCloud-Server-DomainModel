@@ -16,10 +16,9 @@ const updateDomainModel = async (req, res) => {
 
             return successResponse(res, await domainModel.save(), "Domain Model updated successfully");
         }
-
         const domainModel = await DomainModel.find({
             name: req.body.name,
-            clientId: req?.user?.clientId
+            clientId: req?.user?.clientId || req?.body?.clientId,
         });
         if (domainModel.length) {
             return errorResponse(res, { error: 'Domain Model already exists' }, 400);

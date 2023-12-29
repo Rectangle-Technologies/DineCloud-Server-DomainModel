@@ -15,11 +15,18 @@ const GenerateModel = async (model) => {
 const FetchModels = async (req, res) => {
     const modelData = req.body;
     const modelNames = Object.keys(modelData);
+    const filter = {}
+    if (req?.user?.clientId) {
+        filter.clientId = req?.user?.clientId;
+    } else {
+        filter.clientCode = req?.user?.clientCode;
+    }
     const modelSchemas = await DomainModel.find({
         name: {
             $in: modelNames
         },
-        clientCode: req.user.clientCode
+        clientCode: req.user.clientCode,
+        ...filter
     })
     const modelNamesFromDB = modelSchemas.map(model => model.name);
     const modelNamesNotInDB = modelNames.filter(modelName => !modelNamesFromDB.includes(modelName));
