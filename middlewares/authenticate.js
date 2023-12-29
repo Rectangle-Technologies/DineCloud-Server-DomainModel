@@ -25,6 +25,10 @@ const authenticateUserMiddleware = async (req, res, next) => {
             const schemas = await FetchModels({
                 body: {
                     "User": {}
+                },
+                user: {
+                    clientCode: decoded.clientCode,
+                    clientId: decoded.clientId
                 }
             }, res);
 
@@ -36,6 +40,7 @@ const authenticateUserMiddleware = async (req, res, next) => {
             req.user = user;
 
         } else {
+            console.log("Token not verified");
             throw new TokenNotValidException();
         }
         next();

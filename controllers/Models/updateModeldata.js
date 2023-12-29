@@ -1,4 +1,4 @@
-const { ModelNotFoundException, MultipleModelsException } = require('../../exceptions/ModelException');
+const { ModelNotFoundException, MultipleModelsException, ModelDataNotFoundException } = require('../../exceptions/ModelException');
 const { GenerateModel, FetchModels } = require('../../utils/modelGenerator');
 const { successResponse, errorResponse } = require('../../utils/response');
 
@@ -53,17 +53,30 @@ const updateModeldata = async (req, res) => {
         const modelData = req.body[modelSchema.name];
         let result;
 
+        console.log(modelData);
+
         if (modelData.length) {
             result = await Model.insertMany(modelData);
         } else {
-            const modelInstance = new Model(modelData);
-            result = await modelInstance.save();
+            if (modelData._id) {
+                const savedData = await Model.findById(modelData._id)
+                if (savedData) {
+                    Object.assign(savedData, modelData);
+                    result = await savedData.save();
+                } else {
+                    throw new ModelDataNotFoundException();
+                }
+            } else {
+                const modelInstance = new Model(modelData);
+                result = await modelInstance.save();
+            }
         }
 
         updatedData.push({ [modelSchema.name]: result });
         return successResponse(res, updatedData, "Data updated successfully");
     } catch (error) {
         const errorObject = error?.response?.data || error;
+        console.log(errorObject);
         errorResponse(res, errorObject, error.statusCode || 500);
     }
 };
