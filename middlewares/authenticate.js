@@ -7,18 +7,14 @@ const { GenerateModel, FetchModels } = require('../utils/modelGenerator');
 
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
-        // By-pass for login
         if (req.header('Bypass-Key') === process.env.BYPASS_KEY) {
             return next();
         }
-
-        // Get token
         const token = req.header('Authorization')?.replace('Bearer ', '');
         if (!token) {
             throw new TokenNotProvidedException();
         }
 
-        // Verify token
         if (jwt.verify(token)) {
             const decoded = jwt.decode(token);
 
@@ -34,13 +30,10 @@ const authenticateUserMiddleware = async (req, res, next) => {
 
             const User = await GenerateModel(schemas[0]);
 
-            // Check for user
             const user = await User.findOne({ clientCode: decoded.clientCode, _id: decoded._id });
             req.token = token;
             req.user = user;
-
         } else {
-            console.log("Token not verified");
             throw new TokenNotValidException();
         }
         next();

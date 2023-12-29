@@ -7,10 +7,8 @@ const updateModeldatas = async (req, res) => {
     if (!modelSchemas.length) {
         return errorResponse(res, "Models not found", 400);
     }
-
     const updatedData = [];
     const errorOccured = [];
-
     for (const modelSchema of modelSchemas) {
         const modelName = modelSchema.name;
         try {
@@ -30,7 +28,6 @@ const updateModeldatas = async (req, res) => {
             errorOccured.push({ [modelName]: { message: "Error occured while updating data", error } });
         }
     }
-
     return successResponse(res, updatedData, "Data updated successfully", errorOccured);
 };
 
@@ -40,20 +37,14 @@ const updateModeldata = async (req, res) => {
         if (!modelSchemas.length) {
             throw new ModelNotFoundException();
         }
-
         const updatedData = [];
-
         if (modelSchemas.length > 1) {
             throw new MultipleModelsException();
         }
-
         const modelSchema = modelSchemas[0];
-
         const Model = await GenerateModel(modelSchema);
         const modelData = req.body[modelSchema.name];
         let result;
-
-        console.log(modelData);
 
         if (modelData.length) {
             result = await Model.insertMany(modelData);
@@ -76,7 +67,6 @@ const updateModeldata = async (req, res) => {
         return successResponse(res, updatedData, "Data updated successfully");
     } catch (error) {
         const errorObject = error?.response?.data || error;
-        console.log(errorObject);
         errorResponse(res, errorObject, error.statusCode || 500);
     }
 };
