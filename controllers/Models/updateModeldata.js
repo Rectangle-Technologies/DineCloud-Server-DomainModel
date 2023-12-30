@@ -51,8 +51,8 @@ const updateModeldata = async (req, res) => {
             result = await Model.insertMany(modelData);
         } else {
             if (modelData._id) {
-                const savedData = await Model.find({ _id: modelData._id, clientId: req.user.clientId, clientCode: req.user.clientCode })
-                if (savedData.length) {
+                const savedData = await Model.findOne({ _id: modelData._id, clientId: req.user.clientId, clientCode: req.user.clientCode })
+                if (savedData) {
                     Object.assign(savedData, modelData);
                     result = await savedData.save();
                 } else {
