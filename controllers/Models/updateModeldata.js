@@ -51,8 +51,8 @@ const updateModeldata = async (req, res) => {
             result = await Model.insertMany(modelData);
         } else {
             if (modelData._id) {
-                const savedData = await Model.find({_id: modelData._id, clientId: req.user.clientId, clientCode: req.user.clientCode})
-                if (savedData) {
+                const savedData = await Model.find({ _id: modelData._id, clientId: req.user.clientId, clientCode: req.user.clientCode })
+                if (savedData.length) {
                     Object.assign(savedData, modelData);
                     result = await savedData.save();
                 } else {
@@ -67,7 +67,7 @@ const updateModeldata = async (req, res) => {
         updatedData.push({ [modelSchema.name]: result });
         return successResponse(res, updatedData, "Data updated successfully");
     } catch (error) {
-        console
+        console.log(error);
         const errorObject = error?.response?.data || error;
         errorResponse(res, errorObject, error.statusCode || 500);
     }
