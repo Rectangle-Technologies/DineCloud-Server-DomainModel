@@ -1,15 +1,17 @@
 const DomainModel = require('../../models/DomainModel');
+const { DomainModelEngine } = require("@nds-core/domain-model-engine")
 
 const { successResponse, errorResponse } = require('../../utils/response');
 
 const updateDomainModel = async (req, res) => {
     try {
+        const domainModelEngine = new DomainModelEngine();
         const { _id } = req.body;
 
         if (_id) {
             const domainModel = await DomainModel.findById(_id);
             if (domainModel) {
-                domainModel.schema = req.body.schema;
+                domainModel.schema = domainModelEngine.convertToMongooseSchema(req.body.schema);
             } else {
                 return errorResponse(res, { error: 'Domain Model not found' }, 404);
             }
@@ -24,6 +26,7 @@ const updateDomainModel = async (req, res) => {
             return errorResponse(res, { error: 'Domain Model already exists' }, 400);
         }
 
+        req.body.schema = domainModelEngine.convertToMongooseSchema(req.body.schema);
         const newDomainModel = new DomainModel(req.body);
 
         return successResponse(res, await newDomainModel.save(), "Domain Model created successfully");
