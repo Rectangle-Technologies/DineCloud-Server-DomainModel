@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const startSetup = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
-    const models = await DomainModel.find({clientCode: process.env.BASE_CLIENT_CODE, clientId: process.env.BASE_CLIENT_ID});
+    const models = await DomainModel.find({ clientCode: process.env.BASE_CLIENT_CODE, clientId: process.env.BASE_CLIENT_ID });
     for (var i in models) {
         const model = models[i];
         model._id = undefined;
@@ -14,4 +14,14 @@ const startSetup = async () => {
     }
 }
 
-startSetup();
+const FetchModels = async () => {
+    await mongoose.connect(process.env.MONGODB_URI);
+    const models = await DomainModel.find({ name: "User" });
+    for (var i in models) {
+        const model = models[i];
+        console.log('--------------\n' + JSON.stringify(model.schema));
+    }
+}
+
+// startSetup();
+FetchModels();
