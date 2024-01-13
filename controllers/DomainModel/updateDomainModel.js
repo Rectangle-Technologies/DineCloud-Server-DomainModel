@@ -11,7 +11,6 @@ const updateDomainModel = async (req, res) => {
         if (_id) {
             const domainModel = await DomainModel.findById(_id);
             if (domainModel) {
-                console.log(req.body.schema);
                 domainModel.schema = domainModelEngine.convertToMongooseSchema(req.body.name, req.body.schema);
             } else {
                 return errorResponse(res, { error: 'Domain Model not found' }, 404);

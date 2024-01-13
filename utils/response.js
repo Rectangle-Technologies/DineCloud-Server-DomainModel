@@ -11,7 +11,6 @@ const successResponse = (res, data, message, error = null) => {
 const errorResponse = (res, error, statuscode, data = {}) => {
     return res.status(statuscode).json({
         status: 'error',
-        message: error.message || 'Internal Server Error',
         data: null,
         error
     });
