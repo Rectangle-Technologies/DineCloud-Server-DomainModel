@@ -21,7 +21,8 @@ const updateDomainModel = async (req, res) => {
         }
         const domainModel = await DomainModel.find({
             name: req.body.name,
-            clientId: req?.user?.clientId || req?.body?.clientId,
+            clientCode: req?.user?.clientCode,
+            clientId: req?.user?.clientId
         });
         if (domainModel.length) {
             return errorResponse(res, { error: 'Domain Model already exists' }, 400);
@@ -32,7 +33,6 @@ const updateDomainModel = async (req, res) => {
 
         return successResponse(res, await newDomainModel.save(), "Domain Model created successfully");
     } catch (error) {
-        console.log(error);
         errorResponse(res, error, 500);
     }
 

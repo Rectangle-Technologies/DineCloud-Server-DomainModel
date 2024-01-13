@@ -7,12 +7,6 @@ const { GenerateModel, FetchModels } = require('../utils/modelGenerator');
 
 const authenticateUserMiddleware = async (req, res, next) => {
     try {
-        if (req.header('Bypass-Key') === process.env.BYPASS_KEY) {
-            req.user = {
-                clientCode: req?.body?.User?.clientCode
-            }
-            return next();
-        }
         const token = req.header('Authorization')?.replace('Bearer ', '');
         if (!token) {
             throw new TokenNotProvidedException();
@@ -20,6 +14,14 @@ const authenticateUserMiddleware = async (req, res, next) => {
 
         if (jwt.verify(token)) {
             const decoded = jwt.decode(token);
+
+            if (req.header('Bypass-Key') === process.env.BYPASS_KEY && process.env.NODE_ENV === 'development' && decoded?.isAdmin === true) {
+                req.token = token;
+                decoded.clientCode = req.header('Client-Code');
+                decoded.clientId = req.header('Client-Id');
+                req.user = decoded;
+                return next();
+            }
 
             const schemas = await FetchModels({
                 body: {
