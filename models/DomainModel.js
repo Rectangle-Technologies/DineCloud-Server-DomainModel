@@ -21,7 +21,6 @@ const DomainModelSchema = new mongoose.Schema({
     applicationId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ApplicationModel',
-        required: true
     },
     clientCode: {
         type: String,
@@ -29,8 +28,7 @@ const DomainModelSchema = new mongoose.Schema({
     },
     clientId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'ClientModel',
-        required: true
+        ref: 'Client',
     }
 }, {
     timestamps: true

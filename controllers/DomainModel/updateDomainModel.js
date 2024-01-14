@@ -11,6 +11,7 @@ const updateDomainModel = async (req, res) => {
         if (_id) {
             const domainModel = await DomainModel.findById(_id);
             if (domainModel) {
+                domainModel.clientId = req?.user?.clientId;
                 domainModel.schema = domainModelEngine.convertToMongooseSchema(req.body.name, req.body.schema);
             } else {
                 return errorResponse(res, { error: 'Domain Model not found' }, 404);
@@ -27,6 +28,7 @@ const updateDomainModel = async (req, res) => {
             return errorResponse(res, { error: 'Domain Model already exists' }, 400);
         }
 
+        req.body.clientCode = req?.user?.clientCode;
         req.body.schema = domainModelEngine.convertToMongooseSchema(req.body.name, req.body.schema);
         const newDomainModel = new DomainModel(req.body);
 

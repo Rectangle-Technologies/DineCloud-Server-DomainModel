@@ -32,7 +32,18 @@ const routesConfig = [
             key: "DomainModelSchema",
             version: "1"
         },
-        description: "Get Domain Models"
+        description: "Get all Domain Models"
+    },
+    {
+        method: 'post',
+        path: '/getDomainModelsByFilter',
+        controller: require('../controllers/DomainModel/getDomainModelsByFilter').getDomainModelsByFilter,
+        middleware: [],
+        inputSchema: {
+            key: "DomainModelSchema",
+            version: "1"
+        },
+        description: "Get Domain Models by filter"
     }
 ]
 
